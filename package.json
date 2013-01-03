@@ -1,0 +1,25 @@
+{
+  "name": "perkins",
+  "version": "3.0.0",
+  "author": "Carlos Elias <hola@carloselias.cl>",
+  "description": "Design & Develop the web Faster",
+  "keywords": ["web", "server", "cli", "framework", "web development", "CSS3", "HTML5", "LESS", "wireframes"],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/carloselias/perkins-cli.git"
+  },
+  "contributors": [
+    { "name": "Rodrigo Fuentealba", "email": "rfuentealbac.83@gmail.com" },
+    { "name": "Alvaro Veliz", "email": "yo@alvaroveliz.cl" }
+  ],
+  "dependencies": {
+    "colors" : "*",
+    "commander": "*",
+    "mkdirp": "*",
+    "express": "*",
+    "less-middleware": "*",
+    "bower": "*"
+  },
+  "bin": "perkins",
+  "engines": { "node": "*" }
+}

@@ -1,0 +1,179 @@
+#!/usr/bin/env node
+
+/**
+* Perkins v3.0.0 CLI by Carlos Elias
+*/
+
+var exec     = require('child_process').exec,
+    os       = require('os'),
+    fs       = require('fs'),
+    ospath   = require('path'),
+    colors   = require('colors'),
+    perkins  = require('commander'),
+    mkdir    = require('mkdirp'),
+    bower    = require('bower'),
+    express  = require('express'),
+    pkg      = require('./package.json'),
+    version  = pkg.version;
+
+    // setting bower assets folder
+    bower.config.directory = "vendor/";
+
+perkins
+  .version('Perkins ' +version.cyan)
+  .usage('[command] --options <dir>'.bold)
+  .option('-p, --port <port>', 'specify the port [8000]', Number, 8000)
+
+perkins
+  .command('init <path>')
+  .description('setup a initial structure in the specified directory.')
+  .action(function(dir){
+    if (fs.existsSync(dir)) {
+      perkins.confirm('destination is not empty, continue? ', function(ok){
+        if (ok) {
+          process.stdin.destroy();
+          createApplicationAt(dir);
+        } else {
+          abort('aborting');
+        }
+      });
+    } else {
+      createApplicationAt(dir);
+    }
+  });
+
+perkins
+  .command('server [path]')
+  .description('start a HTTP Server in the current directory')
+  .action(function(dir){
+    if (fs.existsSync(dir)) {
+      // express server
+      app = express();
+      dir = ospath.resolve(dir)
+      console.log('Server started at '.cyan+'http://localhost:'+perkins.port+' Sir.'.cyan)
+      // console.log(dir + '/vendor/perkins from');
+      // console.log(dir + '/public to');
+      app.configure(function(){
+        app.set('views', dir + '/');
+        app.use(express.favicon());
+        app.use(express.logger('dev'));
+        app.use(express.bodyParser());
+        app.use(express.methodOverride());
+        var lessOptions = {
+          src: dir + '/vendor/perkins',
+          dest: dir + '/stylesheets',
+          prefix: '/stylesheets',
+          force: true,
+          compress: true,
+          optimization: 2
+        };
+        app.use(require('less-middleware')(lessOptions));
+        app.use(express.static(dir + '/'));
+      });
+      app.get('/', function(req, res){
+        dir = ospath.resolve(dir)
+        res.sendfile(dir + '/index.html');
+      });
+      app.listen(perkins.port);
+    } else {
+      console.log('Sorry, Sir but '+dir+' does not exists...');
+    }
+  });
+
+/*
+perkins
+  .command('build <path>')
+  .description('build out your project as static files into public/')
+  .action(function(dir) {
+    if (fs.existsSync(dir)) {
+      console.log('Buildout ' +dir+ 'results are in public/')
+    }
+    else {
+      console.log('Sorry, Sir but '+ dir +' does not exists');
+    }
+  });
+*/
+perkins
+  .command('search [dep]')
+  .description('search for dependencies (using bower)')
+  .action(function() {
+    command = process.argv.slice(2);
+    doBower(command);
+  });
+
+perkins
+  .command('install [dep]')
+  .description('install dependencies (usign bower)')
+  .action(function() {
+    mkdir.sync('vendor/', 0755);
+    command = process.argv.slice(2);
+    doBower(command);
+  });
+
+var eol = 'win32' == os.platform() ? '\r\n' : '\n'
+
+var plainIndex = [
+  '<!DOCTYPE html>',
+  '<html>',
+  '  <head>',
+  '    <title>New App</title>',
+  '    <link rel=\'stylesheet\' href=\'stylesheets/app.css\' />',
+  '  </head>',
+  '  <body>',
+  '    <h1>Perkins</h1>',
+  '    <p>Now you can start building the future, Sir</p>',
+  '  </body>',
+  '</html>',
+].join(eol);
+
+function doBower(command) {
+  bower.commands[command[0]].line(['node', __dirname].concat(command))
+    .on('data', function (data) { data && console.log(data); })
+    .on('end', function (data) { data && console.log(data); })
+    .on('error', function (err) { throw err });
+}
+function write(path, str) {
+  fs.writeFile(path, str);
+  console.log('Creating: '.cyan);
+  console.log(path.bold);
+}
+function createApplicationAt(dir) {
+  console.log();
+  process.on('exit', function(){
+    console.log('Perkins ' +version+' init @ ' +dir);
+    console.log();
+    console.log('   If you want a more complex app install dependencies:');
+    console.log('     $ cd %s && npm install', dir);
+    console.log();
+    console.log('   Or just run the static HTTP Server:');
+    console.log('     $ perkins preview %s', dir);
+    console.log();
+  });
+
+  mkdir(dir, function(){
+    mkdir(dir + '/javascripts');
+    mkdir(dir + '/images');
+    mkdir(dir + '/stylesheets');
+
+    // package.json
+    var pkg = {
+      name: 'application-name',
+      version: '0.0.1',
+      private: true,
+      dependencies: {
+       express: '*',
+       'less-middleware': '*'
+      }
+    }
+
+    bower.config.directory = "/" + dir + "/vendor/";
+    command = [ 'install', 'perkins' ];
+    doBower(command);
+    // console.log(bower.config.directory);
+    
+    write(dir + '/package.json', JSON.stringify(pkg, null, 2));
+    write(dir + '/index.html', plainIndex);
+  });
+}
+
+perkins.parse(process.argv);
