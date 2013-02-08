@@ -51,8 +51,6 @@ perkins
       app = express();
       dir = ospath.resolve(dir)
       console.log('Server started at '.cyan+'http://localhost:'+perkins.port+' Sir.'.cyan)
-      // console.log(dir + '/vendor/perkins from');
-      // console.log(dir + '/public to');
       app.configure(function(){
         app.set('views', dir + '/');
         app.use(express.favicon());
@@ -114,9 +112,13 @@ var eol = 'win32' == os.platform() ? '\r\n' : '\n'
 
 var plainIndex = [
   '<!DOCTYPE html>',
-  '<html>',
+  '<html lang="en">',
   '  <head>',
-  '    <title>New App</title>',
+  '    <meta charset="utf-8">',
+  '    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">',
+  '    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">',
+  '    <meta name="apple-mobile-web-app-capable" content="yes">',
+  '    <title>Perkins v'+version+'</title>',
   '    <link rel=\'stylesheet\' href=\'stylesheets/app.css\' />',
   '  </head>',
   '  <body>',
@@ -146,7 +148,7 @@ function createApplicationAt(dir) {
     console.log('     $ cd %s && npm install', dir);
     console.log();
     console.log('   Or just run the static HTTP Server:');
-    console.log('     $ perkins preview %s', dir);
+    console.log('     $ perkins server %s', dir);
     console.log();
   });
 
