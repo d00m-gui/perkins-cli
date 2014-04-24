@@ -58,8 +58,6 @@ perkins
       console.log('Server started at '.cyan+'http://localhost:'+perkins.port+' Sir.'.cyan)
 
       app.set('views', dir + '/');
-
-      app.use(express.static(dir + '/'));
       app.use(favicon());
       app.use(morgan('dev'));
       app.use(bodyParser());
@@ -72,11 +70,11 @@ perkins
             return pathname.replace('/stylesheets',  '');
           }
         },
-        optimization: 2
+        force: true
       };
 
       var parserOptions = {
-        force: true
+        optimization: 2
       };
 
       var compilerOptions = {
@@ -84,6 +82,8 @@ perkins
       };
 
       app.use(lessMiddleware(dir + '/vendor/perkins', lessOptions, parserOptions, compilerOptions));
+
+      app.use(express.static(dir + '/'));
 
       app.get('/', function(req, res){
         dir = ospath.resolve(dir)
@@ -152,11 +152,13 @@ function doBower(command) {
     .on('end', function (data) { data && console.log(data); })
     .on('error', function (err) { throw err });
 }
+
 function write(path, str) {
   fs.writeFile(path, str);
   console.log('Creating: '.cyan);
   console.log(path.bold);
 }
+
 function createApplicationAt(dir) {
   console.log();
   process.on('exit', function(){
