@@ -1,6 +1,6 @@
 {
   "name": "perkins",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "author": "Carlos Elias <hola@carloselias.cl>",
   "description": "Design & Develop the web Faster",
   "keywords": ["web", "server", "cli", "framework", "web development", "CSS3", "HTML5", "LESS", "wireframes"],
@@ -17,6 +17,10 @@
     "commander": "*",
     "mkdirp": "*",
     "express": "*",
+    "static-favicon" : "*",
+    "morgan" : "*",
+    "body-parser" : "*",
+    "method-override" : "*",
     "less-middleware": "*",
     "bower": "*"
   },
