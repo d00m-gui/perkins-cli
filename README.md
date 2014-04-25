@@ -1,11 +1,11 @@
-##Introduction
+# Perkins CLI
 
-**Perkins CLI**
+## Introduction ##
 
 Because every Batman needs his Robin, we've created the helper to the helper.
 Perkins-CLI it's the best way to start using Perkins. The only thing you have to know is to use your Terminal.
 
-**Starting with Perkins-CLI**
+## Starting with Perkins-CLI ##
 
 First of all, you need to had installed nodejs with npm. Then you have to go to your Terminal and type:
 
@@ -13,19 +13,20 @@ First of all, you need to had installed nodejs with npm. Then you have to go to 
 
 This action will install <code>perkins</code> in your computer via npm and it will be able to use via command line.
 
-The next step is start your website with this command:
+The next step is start your website* with this command:
 
 `perkins init my-awesome-website`
 
-**Asuming your website will be awesome**
+<sub><sup>*Asuming your website will be awesome</sup></sub>
 
 This action will create:
+
   - A basic starting point HTML structure
   - Download the Perkins LESS Framework
 
 So you can start building your awesome website.
 
-**The server**
+## The server ##
 
 There's another step that will help you build your website even more comfortable. Perkins-CLI can make you a ~~sandwich~~ webserver for you, in order to let you start faster.
 
