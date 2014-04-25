@@ -27,7 +27,7 @@ So you can start building your awesome website.
 
 **The server**
 
-There's another step that will help you build your website even more comfortable. Perkins-CLI can make you a <stroke>sandwich</stroke> webserver for your site, in order to give you more freedom.
+There's another step that will help you build your website even more comfortable. Perkins-CLI can make you a ~~sandwich~~ webserver for you, in order to let you start faster.
 
 You don't need to install anything, the only thing that you have to do is:
 
@@ -35,4 +35,4 @@ You don't need to install anything, the only thing that you have to do is:
 
 And... that's all!
 
-We hove you enjoy this application just like us.
+We hope you enjoy this application as much as we do.
