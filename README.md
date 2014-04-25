@@ -17,15 +17,19 @@ The next step is start your website with this command:
 
 `perkins init my-awesome-website`
 
-**Asuming that your website will gonna be awesome**
+**Asuming your website will be awesome**
 
-This action will install Perkins and you will be ready to start to build your website.
+This action will create:
+  - A basic starting point HTML structure
+  - Download the Perkins LESS Framework
+
+So you can start building your awesome website.
 
 **The server**
 
-There's another step that will help you to build your website even more comfortable. Perkins-cli can make you a <stroke>sandwich</stroke> webserver for your site, in order to give you more freedom.
+There's another step that will help you build your website even more comfortable. Perkins-CLI can make you a <stroke>sandwich</stroke> webserver for your site, in order to give you more freedom.
 
-You don't need to install nothing, the only thing that you have to do is:
+You don't need to install anything, the only thing that you have to do is:
 
 `perkins server my-awesome-website`
 
